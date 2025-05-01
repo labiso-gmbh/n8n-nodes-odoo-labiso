@@ -358,40 +358,41 @@ export async function odooWorkflow(
 	// args?: any[], // Removed args parameter
 	kwargs?: IDataObject, // Keep optional kwargs parameter
 ) {
+
 try {
-		// Validate itemsID
-		if (!/^\d+$/.test(itemsID) || !parseInt(itemsID, 10)) {
-			throw new NodeApiError(this.getNode(), {
-				status: 'Error',
-				message: `Please specify a valid ID: ${itemsID}`,
-			});
-		}
+	// Validate itemsID
+	if (!/^\d+$/.test(itemsID) || !parseInt(itemsID, 10)) {
+		throw new NodeApiError(this.getNode(), {
+			status: 'Error',
+			message: `Please specify a valid ID: ${itemsID}`,
+		});
+	}
 
-		// Arguments for Odoo's 'execute_kw' method
-		// Positional arguments for the target method: [[id], {kwargs}]
-		const methodArgs: any[] = [
-			[+itemsID],   // List of IDs
-			kwargs || {}, // Keyword arguments as positional argument
-		];
+	// Arguments for Odoo's 'execute_kw' method
+	// Each positional argument must be a separate element in the args array
+	const methodArgs: any[] = [[+itemsID]];
+	if (kwargs && Object.keys(kwargs).length > 0) {
+		methodArgs.push(kwargs);
+	}
 
-		// Construct the final JSON-RPC body using 'execute_kw'
-		const body = {
-			jsonrpc: '2.0',
-			method: 'call',
-			params: {
-				service: "object",
-				method: "execute_kw", // Use execute_kw
-				args: [
-					db,
-					userID,
-					password,
-					resource, // model name
-					customOperation, // method name
-					methodArgs,   // Pass [[id], {kwargs}]
-				],
-			},
-			id: Math.floor(Math.random() * 100), // Use a random ID for the JSON-RPC request
-		};
+	// Construct the final JSON-RPC body using 'execute_kw'
+	const body = {
+		jsonrpc: '2.0',
+		method: 'call',
+		params: {
+			service: "object",
+			method: "execute_kw",
+			args: [
+				db,
+				userID,
+				password,
+				resource,
+				customOperation,
+				...methodArgs, // Spread: [id], {kwargs} (if present)
+			],
+		},
+		id: Math.floor(Math.random() * 100),
+	};
 
 		const result = await odooJSONRPCRequest.call(this, body, url);
 		return result;
