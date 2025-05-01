@@ -368,13 +368,11 @@ try {
 		}
 
 		// Arguments for Odoo's 'execute_kw' method
-		// Positional arguments for the target method: [[id]]
+		// Positional arguments for the target method: [[id], {kwargs}]
 		const methodArgs: any[] = [
 			[+itemsID],   // List of IDs
+			kwargs || {}, // Keyword arguments as positional argument
 		];
-
-		// Keyword arguments for the target method (your kwargs)
-		const methodKwargs = kwargs || {};
 
 		// Construct the final JSON-RPC body using 'execute_kw'
 		const body = {
@@ -389,9 +387,8 @@ try {
 					password,
 					resource, // model name
 					customOperation, // method name
-					methodArgs,   // Pass [[id]]
+					methodArgs,   // Pass [[id], {kwargs}]
 				],
-				kwargs: methodKwargs, // Pass kwargs as keyword arguments
 			},
 			id: Math.floor(Math.random() * 100), // Use a random ID for the JSON-RPC request
 		};
