@@ -1,16 +1,16 @@
 {
-    "name": "@digital-boss/n8n-nodes-odoo",
+    "name": "@labiso-gmbh/n8n-nodes-odoo-labiso",
     "version": "0.2.3",
     "description": "A node consuming the Odoo API.",
     "license": "SEE LICENSE IN LICENSE.md",
-    "homepage": "https://n8n.io",
+    "homepage": "https://www.labiso.de",
     "author": {
-        "name": "Steffen Hannesschlaeger",
-        "email": "steffen_hannesschlaeger@hotmail.de"
+        "name": "LABISO GmbH",
+        "email": "support@labiso.de"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/digital-boss/n8n-nodes-odoo"
+        "url": "https://github.com/labiso-gmbh/n8n-nodes-odoo-labiso"
     },
     "keywords": [
         "n8n",
@@ -22,8 +22,7 @@
         "custom",
         "workflow",
         "customer service"
-      ],
-      
+    ],
     "main": "index.js",
     "scripts": {
         "dev": "npm run watch",

@@ -1,17 +1,21 @@
-# n8n-nodes-odoo
+# n8n-nodes-odoo-labiso
 
 ![n8n.io - Workflow Automation](https://raw.githubusercontent.com/n8n-io/n8n/master/assets/n8n-logo.png)
 
-This Odoo custom node is created from a [pull request](https://github.com/n8n-io/n8n/pull/2601) to n8n.
+This Odoo custom node was originally created by Steffen Hannesschlaeger ([@digital-boss](https://github.com/digital-boss)) and is now maintained by [LABISO GmbH](https://www.labiso.de).
 
-# If you have n8n installed: Install custom nodes module
+The original work was based on a [pull request](https://github.com/n8n-io/n8n/pull/2601) to n8n.
+
+# Installation
+
+## If you have n8n installed: Install custom nodes module
 
 Install it to the n8n root folder. This is the node_modules folder on the same level of n8n and n8n-core. This differs when you used the -g flag on n8n initial installation. From there do:
 ```
-npm install @digital-boss/n8n-nodes-odoo
+npm install @labiso-gmbh/n8n-nodes-odoo-labiso
 ```
 
-# IFresh install n8n
+## Fresh install n8n
 
 Navigate to desired folder, create a package json and install n8n like so:
 ```
@@ -23,10 +27,10 @@ npm init --yes
 
 npm install n8n
 
-npm install @digital-boss/n8n-nodes-odoo
+npm install @labiso-gmbh/n8n-nodes-odoo-labiso
 ```
 
-# Start n8n
+# Starting n8n
 
 Directly:
 ```

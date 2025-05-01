@@ -26,6 +26,18 @@ Licensor: Jan Oberhauser
 
 ---------------------------------------------------------------------
 
+Copyright 2024 LABISO GmbH
+Copyright 2021 Steffen Hannesschlaeger (Original Author)
+
+This work ("n8n-nodes-odoo-labiso") is licensed under the Apache License, Version 2.0 (the "License"), included below, subject to the "Commons Clause" License Condition v1.0 also included below.
+
+Modifications copyright (C) 2024 LABISO GmbH.
+Original work copyright (C) 2021 Steffen Hannesschlaeger.
+
+---------------------------------------------------------------------
+
+
+
 
                                  Apache License
                            Version 2.0, January 2004
