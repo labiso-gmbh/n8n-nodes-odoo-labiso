@@ -366,31 +366,41 @@ export async function odooWorkflow(
 				message: `Please specify a valid ID: ${itemsID}`,
 			});
 		}
+
+		// Base arguments for Odoo's 'execute' method
+		const baseExecuteArgs: any[] = [
+			db,
+			userID,
+			password,
+			resource, // model name
+			customOperation, // method name
+		];
+
+		// Positional arguments for the target Odoo method
+		const methodPositionalArgs: any[] = [
+			+itemsID, // The record ID is the first positional arg for the method
+			...(args || []), // Append user-provided positional args
+		];
+
+		// Add the method's positional arguments to the base execute arguments
+		baseExecuteArgs.push(...methodPositionalArgs);
+
+		// Add the keyword arguments object as the last element if provided
+		if (kwargs && Object.keys(kwargs).length > 0) {
+			baseExecuteArgs.push(kwargs);
+		}
+
+		// Construct the final JSON-RPC body
 		const body = {
 			jsonrpc: '2.0',
 			method: 'call',
 			params: {
 				service: "object",
 				method: "execute",
-				args: [
-					db,
-					userID,
-					password,
-					resource, // model name
-					customOperation, // method name
-					// Construct the arguments for the Odoo method call
-					// Start with the record ID(s)
-					[+itemsID],
-					// Append positional arguments if provided
-					...(args || []),
-					// Append keyword arguments if provided
-					...(kwargs && Object.keys(kwargs).length > 0 ? [kwargs] : []),
-				],
+				args: baseExecuteArgs, // Use the correctly constructed array
 			},
 			id: Math.floor(Math.random() * 100), // Use a random ID for the JSON-RPC request
 		};
-
-		
 
 		const result = await odooJSONRPCRequest.call(this, body, url);
 		return result;
