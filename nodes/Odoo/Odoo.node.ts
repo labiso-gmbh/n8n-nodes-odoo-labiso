@@ -522,21 +522,10 @@ export class Odoo implements INodeType {
 					if (operation === 'workflow') {
 						const customResourceId = this.getNodeParameter('customResourceId', i) as string;
 						const customOperation = this.getNodeParameter('customOperation', i) as string;
-						// Retrieve args and kwargs, parsing them from JSON strings
-						const argsString = this.getNodeParameter('args', i, '[]') as string;
+						// Retrieve only kwargs, parsing it from JSON string
 						const kwargsString = this.getNodeParameter('kwargs', i, '{}') as string;
 
-						let args: any[] | undefined;
 						let kwargs: IDataObject | undefined;
-
-						try {
-							args = JSON.parse(argsString);
-							if (!Array.isArray(args)) {
-								throw new Error('Args must be a valid JSON array.');
-							}
-						} catch (e) {
-							throw new Error(`Invalid JSON in Args field: ${(e as Error).message}`);
-						}
 
 						try {
 							kwargs = JSON.parse(kwargsString);
@@ -556,7 +545,7 @@ export class Odoo implements INodeType {
 							customOperation,
 							url,
 							customResourceId,
-							args, // Pass parsed args
+							// args, // Removed args
 							kwargs, // Pass parsed kwargs
 						);
 					}

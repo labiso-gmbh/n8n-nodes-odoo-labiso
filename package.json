@@ -1,6 +1,6 @@
 {
     "name": "@labiso-gmbh/n8n-nodes-odoo-labiso",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "description": "A node consuming the Odoo API.",
     "license": "SEE LICENSE IN LICENSE.md",
     "homepage": "https://www.labiso.de",

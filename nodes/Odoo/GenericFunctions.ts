@@ -355,8 +355,8 @@ export async function odooWorkflow(
 	customOperation: string,
 	url: string,
 	itemsID: string,
-	args?: any[], // Add optional args parameter
-	kwargs?: IDataObject, // Add optional kwargs parameter
+	// args?: any[], // Removed args parameter
+	kwargs?: IDataObject, // Keep optional kwargs parameter
 ) {
 	try {
 		// Validate itemsID
@@ -374,16 +374,9 @@ export async function odooWorkflow(
 			password,
 			resource, // model name
 			customOperation, // method name
+			// The record ID(s) are typically the first positional argument for the method itself
+			[+itemsID],
 		];
-
-		// Positional arguments for the target Odoo method
-		const methodPositionalArgs: any[] = [
-			+itemsID, // The record ID is the first positional arg for the method
-			...(args || []), // Append user-provided positional args
-		];
-
-		// Add the method's positional arguments to the base execute arguments
-		baseExecuteArgs.push(...methodPositionalArgs);
 
 		// Add the keyword arguments object as the last element if provided
 		if (kwargs && Object.keys(kwargs).length > 0) {

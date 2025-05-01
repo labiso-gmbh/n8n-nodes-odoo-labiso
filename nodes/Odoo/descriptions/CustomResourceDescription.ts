@@ -416,29 +416,8 @@ export const customResourceDescription: INodeProperties[] = [
 			},
 		},
 	},
-	// Add Args field for Workflow operation
-	{
-		displayName: 'Args (JSON Array)',
-		name: 'args',
-		type: 'string',
-		typeOptions: {
-			editor: 'json',
-			rows: 3,
-		},
-		default: '[]',
-		description: 'Positional arguments to pass to the method as a JSON array (e.g., `["arg1", 123]`)',
-		displayOptions: {
-			show: {
-				operation: [
-					'workflow',
-				],
-				resource: [
-					'custom',
-				],
-			},
-		},
-	},
-	// Add Kwargs field for Workflow operation
+	// Removed Args field
+	// Keep Kwargs field for Workflow operation
 	{
 		displayName: 'Kwargs (JSON Object)',
 		name: 'kwargs',
