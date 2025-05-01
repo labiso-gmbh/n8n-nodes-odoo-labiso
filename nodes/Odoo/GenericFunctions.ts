@@ -367,30 +367,29 @@ export async function odooWorkflow(
 			});
 		}
 
-		// Base arguments for Odoo's 'execute' method
-		const baseExecuteArgs: any[] = [
-			db,
-			userID,
-			password,
-			resource, // model name
-			customOperation, // method name
-			// The record ID(s) are typically the first positional argument for the method itself
-			[+itemsID],
-		];
+		// Arguments for Odoo's 'execute_kw' method
+		// Positional arguments for the target method - Should be empty for single record calls
+		const methodArgs: any[] = []; // Empty list
 
-		// Add the keyword arguments object as the last element if provided
-		if (kwargs && Object.keys(kwargs).length > 0) {
-			baseExecuteArgs.push(kwargs);
-		}
+		// Keyword arguments for the target method
+		const methodKwargs = kwargs || {};
 
-		// Construct the final JSON-RPC body
+		// Construct the final JSON-RPC body using 'execute_kw'
 		const body = {
 			jsonrpc: '2.0',
 			method: 'call',
 			params: {
 				service: "object",
-				method: "execute",
-				args: baseExecuteArgs, // Use the correctly constructed array
+				method: "execute_kw", // Use execute_kw
+				args: [
+					db,
+					userID,
+					password,
+					resource, // model name
+					customOperation, // method name
+					methodArgs,   // Pass the list of positional args for the method [[id]]
+					methodKwargs, // Pass the dictionary of keyword args for the method {}
+				],
 			},
 			id: Math.floor(Math.random() * 100), // Use a random ID for the JSON-RPC request
 		};
