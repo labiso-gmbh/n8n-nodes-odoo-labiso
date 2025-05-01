@@ -358,7 +358,7 @@ export async function odooWorkflow(
 	// args?: any[], // Removed args parameter
 	kwargs?: IDataObject, // Keep optional kwargs parameter
 ) {
-	try {
+try {
 		// Validate itemsID
 		if (!/^\d+$/.test(itemsID) || !parseInt(itemsID, 10)) {
 			throw new NodeApiError(this.getNode(), {
@@ -368,10 +368,12 @@ export async function odooWorkflow(
 		}
 
 		// Arguments for Odoo's 'execute_kw' method
-		// Positional arguments for the target method - Should be empty for single record calls
-		const methodArgs: any[] = []; // Empty list
+		// Positional arguments for the target method: [[id]]
+		const methodArgs: any[] = [
+			[+itemsID],   // List of IDs
+		];
 
-		// Keyword arguments for the target method
+		// Keyword arguments for the target method (your kwargs)
 		const methodKwargs = kwargs || {};
 
 		// Construct the final JSON-RPC body using 'execute_kw'
@@ -387,9 +389,9 @@ export async function odooWorkflow(
 					password,
 					resource, // model name
 					customOperation, // method name
-					methodArgs,   // Pass the list of positional args for the method [[id]]
-					methodKwargs, // Pass the dictionary of keyword args for the method {}
+					methodArgs,   // Pass [[id]]
 				],
+				kwargs: methodKwargs, // Pass kwargs as keyword arguments
 			},
 			id: Math.floor(Math.random() * 100), // Use a random ID for the JSON-RPC request
 		};
