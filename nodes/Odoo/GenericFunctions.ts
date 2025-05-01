@@ -241,7 +241,7 @@ export async function odooGet(
 					password,
 					mapOdooResources[resource] || resource,
 					mapOperationToJSONRPC[operation],
-					[+itemsID] || [],
+					[+itemsID], // Removed || []
 					fieldsToReturn || [],
 				],
 			},
@@ -332,7 +332,7 @@ export async function odooUpdate(
 					password,
 					mapOdooResources[resource] || resource,
 					mapOperationToJSONRPC[operation],
-					[+itemsID] || [],
+					[+itemsID], // Removed || []
 					fieldsToUpdate,
 				],
 			},
@@ -355,8 +355,11 @@ export async function odooWorkflow(
 	customOperation: string,
 	url: string,
 	itemsID: string,
+	args?: any[], // Add optional args parameter
+	kwargs?: IDataObject, // Add optional kwargs parameter
 ) {
 	try {
+		// Validate itemsID
 		if (!/^\d+$/.test(itemsID) || !parseInt(itemsID, 10)) {
 			throw new NodeApiError(this.getNode(), {
 				status: 'Error',
@@ -373,12 +376,18 @@ export async function odooWorkflow(
 					db,
 					userID,
 					password,
-					resource,
-					customOperation,
-					[+itemsID] || []
+					resource, // model name
+					customOperation, // method name
+					// Construct the arguments for the Odoo method call
+					// Start with the record ID(s)
+					[+itemsID],
+					// Append positional arguments if provided
+					...(args || []),
+					// Append keyword arguments if provided
+					...(kwargs && Object.keys(kwargs).length > 0 ? [kwargs] : []),
 				],
 			},
-			id: Math.floor(Math.random() * 100),
+			id: Math.floor(Math.random() * 100), // Use a random ID for the JSON-RPC request
 		};
 
 		
@@ -419,7 +428,7 @@ export async function odooDelete(
 					password,
 					mapOdooResources[resource] || resource,
 					mapOperationToJSONRPC[operation],
-					[+itemsID] || [],
+					[+itemsID], // Removed || []
 				],
 			},
 			id: Math.floor(Math.random() * 100),

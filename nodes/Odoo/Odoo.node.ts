@@ -81,9 +81,11 @@ export class Odoo implements INodeType {
 				description: 'The resource to operate on',
 			},
 
+			// Put 'customResourceOperations' here to reflect the changes made in './descriptions/CustomResourceDescription.ts'
+			// for adding args and kwargs fields
 			...customResourceOperations,
 			...customResourceDescription,
-			
+
 		],
 	};
 
@@ -520,6 +522,31 @@ export class Odoo implements INodeType {
 					if (operation === 'workflow') {
 						const customResourceId = this.getNodeParameter('customResourceId', i) as string;
 						const customOperation = this.getNodeParameter('customOperation', i) as string;
+						// Retrieve args and kwargs, parsing them from JSON strings
+						const argsString = this.getNodeParameter('args', i, '[]') as string;
+						const kwargsString = this.getNodeParameter('kwargs', i, '{}') as string;
+
+						let args: any[] | undefined;
+						let kwargs: IDataObject | undefined;
+
+						try {
+							args = JSON.parse(argsString);
+							if (!Array.isArray(args)) {
+								throw new Error('Args must be a valid JSON array.');
+							}
+						} catch (e) {
+							throw new Error(`Invalid JSON in Args field: ${(e as Error).message}`);
+						}
+
+						try {
+							kwargs = JSON.parse(kwargsString);
+							if (typeof kwargs !== 'object' || kwargs === null || Array.isArray(kwargs)) {
+								throw new Error('Kwargs must be a valid JSON object.');
+							}
+						} catch (e) {
+							throw new Error(`Invalid JSON in Kwargs field: ${(e as Error).message}`);
+						}
+
 						responseData = await odooWorkflow.call(
 							this,
 							db,
@@ -529,6 +556,8 @@ export class Odoo implements INodeType {
 							customOperation,
 							url,
 							customResourceId,
+							args, // Pass parsed args
+							kwargs, // Pass parsed kwargs
 						);
 					}
 				}

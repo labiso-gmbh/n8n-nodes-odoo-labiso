@@ -1,6 +1,6 @@
 {
     "name": "@labiso-gmbh/n8n-nodes-odoo-labiso",
-    "version": "0.2.3",
+    "version": "0.3.0",
     "description": "A node consuming the Odoo API.",
     "license": "SEE LICENSE IN LICENSE.md",
     "homepage": "https://www.labiso.de",
@@ -14,14 +14,10 @@
     },
     "keywords": [
         "n8n",
-        "nodemation",
-        "dnc",
-        "digital north consulting",
-        "digital boss",
-        "nodes",
-        "custom",
-        "workflow",
-        "customer service"
+        "odoo",
+        "labiso-gmbh",
+        "n8n-nodes",
+        "n8n-nodes-odoo"
     ],
     "main": "index.js",
     "scripts": {
